@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"runtime"
+	"strconv"
 	"time"
 
 	"github.com/prometheus/client_golang/prometheus"
@@ -52,6 +53,16 @@ var (
 			"git_commit",
 			"os_version",
 			"go_version",
+		},
+	)
+	proxiedStatus = promauto.NewCounterVec(
+		prometheus.CounterOpts{
+			Name:      "proxied_status",
+			Namespace: namespace,
+			Subsystem: subsystem,
+			Help:      "The total number of proxied requests that returned a status code",
+		}, []string{
+			"code",
 		},
 	)
 	proxiedTotal = promauto.NewCounterVec(
@@ -105,9 +116,8 @@ func NewMint() (*Mint, error) {
 	log.Print("Creating TokenSource")
 	ts, err := google.DefaultTokenSource(context.Background(), scopes...)
 	if err != nil {
-		msg := "unable to create TokenSource"
-		log.Print(msg)
-		return &Mint{}, fmt.Errorf(msg)
+		log.Print(err)
+		return &Mint{}, err
 	}
 
 	log.Print("Returning Mint")
@@ -182,15 +192,25 @@ func handler(m *Mint, remote, prefix string) http.HandlerFunc {
 			return
 		}
 
-		token, err := m.GetAccessToken()
-		if err != nil {
-			msg := "unable to obtain token"
+		// Copy incoming headers
+		pRqst.Header = rqst.Header
+		// Add Authorization header if not already present
+		if len(pRqst.Header.Values("Authorization")) != 0 {
+			msg := "leaving, unexpected Authorization header(s) on incoming request unchanged"
 			log.Print(msg)
-			http.Error(w, msg, http.StatusInternalServerError)
-			return
-		}
+		} else {
+			token, err := m.GetAccessToken()
+			if err != nil {
+				msg := "unable to obtain token"
+				log.Print(msg)
+				http.Error(w, msg, http.StatusInternalServerError)
+				return
+			}
 
-		pRqst.Header.Add("Authorization", fmt.Sprintf("Bearer %s", token))
+			msg := "adding Authorization header to proxied request with Bearer token"
+			log.Print(msg)
+			pRqst.Header.Add("Authorization", fmt.Sprintf("Bearer %s", token))
+		}
 
 		// Create Transport
 		transport := &http.Transport{
@@ -213,6 +233,10 @@ func handler(m *Mint, remote, prefix string) http.HandlerFunc {
 			return
 		}
 		defer pResp.Body.Close()
+
+		proxiedStatus.With(prometheus.Labels{
+			"code": strconv.Itoa(pResp.StatusCode),
+		}).Inc()
 
 		// PromLens requires that this be present (curl does not)
 		// Unsure what specific value it should container instead of the wildcard
