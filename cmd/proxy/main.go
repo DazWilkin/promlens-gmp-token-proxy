@@ -196,7 +196,7 @@ func handler(m *Mint, remote, prefix string) http.HandlerFunc {
 		pRqst.Header = rqst.Header
 		// Add Authorization header if not already present
 		if len(pRqst.Header.Values("Authorization")) != 0 {
-			msg := "leaving, unexpected Authorization header(s) on incoming request unchanged"
+			msg := "leaving unexpected Authorization header(s) on incoming request unchanged"
 			log.Print(msg)
 		} else {
 			token, err := m.GetAccessToken()
@@ -207,8 +207,6 @@ func handler(m *Mint, remote, prefix string) http.HandlerFunc {
 				return
 			}
 
-			msg := "adding Authorization header to proxied request with Bearer token"
-			log.Print(msg)
 			pRqst.Header.Add("Authorization", fmt.Sprintf("Bearer %s", token))
 		}
 
@@ -237,10 +235,6 @@ func handler(m *Mint, remote, prefix string) http.HandlerFunc {
 		proxiedStatus.With(prometheus.Labels{
 			"code": strconv.Itoa(pResp.StatusCode),
 		}).Inc()
-
-		// PromLens requires that this be present (curl does not)
-		// Unsure what specific value it should container instead of the wildcard
-		pResp.Header.Add("Access-Control-Allow-Origin", "*")
 
 		// Replicate the origin's headers
 		func(dst, src http.Header) {
