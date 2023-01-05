@@ -69,9 +69,9 @@ ${PROXY}/api/v1/query
 
 All metrics are prefixed: `promlens_gmp_token_proxy_`
 
-|Metric|Type|Desription|
+|Metric|Type|Description|
 |------|----|----------|
-|`proxied_total`|Counter||
-|`proxied_error`|Counter||
-|`tokens_total`|Counter||
-|`tokens_error`|Counter||
+|`proxied_total`|Counter|Number of requests that have been proxied|
+|`proxied_error`|Counter|Number of requests that failed to be proxied|
+|`tokens_total`|Counter|Number of tokens that have been minted|
+|`tokens_error`|Counter|Number of tokens that failed to be minted|
