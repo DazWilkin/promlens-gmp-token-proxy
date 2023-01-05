@@ -32,7 +32,7 @@ jobs:
           build-args: |
             VERSION=${{ env.VERSION }}
             COMMIT=${{ github.sha }}
-          tags: ${{ github.repository }}:${ github.sha }}
+          tags: ${{ github.repository }}:${{ github.sha }}
           # tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
           push: true
       # - name: revise occurrences of the image
