@@ -1,10 +1,14 @@
-# 
+# A token proxy to authenticate [PromLens](https://promlens.com/) to [Google Managed Prometheus](https://cloud.google.com/stackdriver/docs/managed-prometheus)
+
+[![build-container](https://github.com/DazWilkin/promlens-gmp-token-proxy/actions/workflows/build.yml/badge.svg)](https://github.com/DazWilkin/promlens-gmp-token-proxy/actions/workflows/build.yml)
+
+![Google Compute Engine: Instance CPU Utilization](/images/promlens.compute_googleapis._com.png)
 
 ## GCP
 
 ```bash
 PROJECT="..."
-ACCOUNT="prometheus-proxy"
+ACCOUNT="prom-proxy"
 
 EMAIL=${ACCOUNT}@${PROJECT}.iam.gserviceaccount.com
 
