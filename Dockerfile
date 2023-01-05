@@ -1,4 +1,4 @@
-ARG GOLANG_VERSION="1.20rc2-alphine"
+ARG GOLANG_VERSION="1.20rc2-alpine"
 ARG PROJECT="promlens-gmp-token-proxy"
 
 ARG COMMIT
