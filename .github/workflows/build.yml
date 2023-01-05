@@ -9,8 +9,8 @@ jobs:
   promlens-gmp-token-proxy:
     name: promlens-gmp-token-proxy
     runs-on: ubuntu-latest
-    # env:
-    #   REPO: dazwilkin/gcp-oidc-token-proxy
+    env:
+      REPO: dazwilkin/promlens-gmp-token-proxy
     steps:
       - name: checkout
         uses: actions/checkout@v3
@@ -32,8 +32,7 @@ jobs:
           build-args: |
             VERSION=${{ env.VERSION }}
             COMMIT=${{ github.sha }}
-          tags: ${{ github.repository }}:${{ github.sha }}
-          # tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
+          tags: ghcr.io/${{ env.REPO }}:${{ github.sha }}
           push: true
       # - name: revise occurrences of the image
       #   run: |
