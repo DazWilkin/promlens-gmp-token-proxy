@@ -232,12 +232,6 @@ func handler(m *Mint, remote, prefix string) http.HandlerFunc {
 	}
 }
 func main() {
-	log.Print("Build config",
-		"build_time", BuildTime,
-		"git_commit", GitCommit,
-		"os_version", OSVersion,
-		"go_version", GoVersion,
-	)
 	counterBuildTime.With(prometheus.Labels{
 		"build_time": BuildTime,
 		"git_commit": GitCommit,
