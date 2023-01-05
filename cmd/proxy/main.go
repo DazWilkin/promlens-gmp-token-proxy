@@ -78,7 +78,7 @@ var (
 			Name:      "proxied_error",
 			Namespace: namespace,
 			Subsystem: subsystem,
-			Help:      "The total number of proxied requests that failed",
+			Help:      "The total number of proxied requests that errored",
 		}, []string{},
 	)
 	tokensTotal = promauto.NewCounterVec(
@@ -86,7 +86,7 @@ var (
 			Name:      "tokens_total",
 			Namespace: namespace,
 			Subsystem: subsystem,
-			Help:      "The total number of Tokens created",
+			Help:      "The total number of token requests",
 		}, []string{},
 	)
 	tokensError = promauto.NewCounterVec(
@@ -94,7 +94,7 @@ var (
 			Name:      "tokens_error",
 			Namespace: namespace,
 			Subsystem: subsystem,
-			Help:      "The total number of Tokens failed",
+			Help:      "The total number of token requests failed",
 		}, []string{},
 	)
 )

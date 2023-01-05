@@ -71,8 +71,10 @@ All metrics are prefixed: `promlens_gmp_token_proxy_`
 
 |Metric|Type|Labels|Description|
 |------|----|------|-----------|
-|`proxied_status`|Counter|`code`|Number of proxied requests that succeeded|
+|`proxied_status`|Counter|`code`|Number of proxied requests that returned a status code|
 |`proxied_total`|Counter||Number of proxied requests|
-|`proxied_error`|Counter||Number of proxied requests that failed|
+|`proxied_error`|Counter||Number of proxied requests that errored|
 |`tokens_total`|Counter||Number of token requests|
 |`tokens_error`|Counter||Number of token requests that failed|
+
+Proxied requests may fail and return an error. Proxied requqests may succeed but include a HTTP status code that represents client (`4XX`) or server (`5XX`) errors. The `proxied_` metrics attempt to reflect this nuance.
