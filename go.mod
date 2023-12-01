@@ -4,7 +4,7 @@ go 1.21
 
 require (
 	github.com/prometheus/client_golang v1.17.0
-	golang.org/x/oauth2 v0.13.0
+	golang.org/x/oauth2 v0.15.0
 )
 
 require (
