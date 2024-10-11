@@ -3,7 +3,7 @@ module github.com/DazWilkin/promlens-gmp-token-proxy
 go 1.22
 
 require (
-	github.com/prometheus/client_golang v1.20.2
+	github.com/prometheus/client_golang v1.20.4
 	golang.org/x/oauth2 v0.23.0
 )
 
