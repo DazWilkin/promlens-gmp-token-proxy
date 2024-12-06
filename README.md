@@ -64,7 +64,6 @@ curl \
 ${PROXY}/api/v1/query
 ```
 
-
 ## Metrics
 
 All metrics are prefixed: `promlens_gmp_token_proxy_`
@@ -78,3 +77,21 @@ All metrics are prefixed: `promlens_gmp_token_proxy_`
 |`tokens_error`|Counter||Number of token requests that failed|
 
 Proxied requests may fail and return an error. Proxied requqests may succeed but include a HTTP status code that represents client (`4XX`) or server (`5XX`) errors. The `proxied_` metrics attempt to reflect this nuance.
+
+## [Sigstore](https://www.sigstore.dev/)
+
+`promlens-gmp-token-proxy` container images are being signed by Sigstore and may be verified:
+
+```bash
+cosign verify \
+--key=./cosign.pub \
+ghcr.io/dazwilkin/promlens-gmp-token-proxy:1234567890123456789012345678901234567890
+```
+
+NOTE cosign.pub may be downloaded [here](./cosign.pub)
+
+To install cosign, e.g.:
+
+```bash
+go install github.com/sigstore/cosign/cmd/cosign@latest
+```

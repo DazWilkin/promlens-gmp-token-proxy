@@ -1,2 +1,6 @@
 # Exclude possible keys
 *.json
+
+# Exclude Sigstore private key
+cosign.key
+
