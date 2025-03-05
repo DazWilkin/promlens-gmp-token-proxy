@@ -1,4 +1,4 @@
-ARG GOLANG_VERSION="1.23"
+ARG GOLANG_VERSION="1.24"
 ARG PROJECT="promlens-gmp-token-proxy"
 
 ARG TARGETOS
