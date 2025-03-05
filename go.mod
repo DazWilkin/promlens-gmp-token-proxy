@@ -1,21 +1,21 @@
 module github.com/DazWilkin/promlens-gmp-token-proxy
 
-go 1.23
+go 1.24
 
 require (
-	github.com/prometheus/client_golang v1.20.5
-	golang.org/x/oauth2 v0.24.0
+	github.com/prometheus/client_golang v1.21.1
+	golang.org/x/oauth2 v0.28.0
 )
 
 require (
-	cloud.google.com/go/compute/metadata v0.5.2 // indirect
+	cloud.google.com/go/compute/metadata v0.6.0 // indirect
 	github.com/beorn7/perks v1.0.1 // indirect
 	github.com/cespare/xxhash/v2 v2.3.0 // indirect
-	github.com/klauspost/compress v1.17.11 // indirect
+	github.com/klauspost/compress v1.18.0 // indirect
 	github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822 // indirect
 	github.com/prometheus/client_model v0.6.1 // indirect
-	github.com/prometheus/common v0.61.0 // indirect
+	github.com/prometheus/common v0.62.0 // indirect
 	github.com/prometheus/procfs v0.15.1 // indirect
-	golang.org/x/sys v0.28.0 // indirect
-	google.golang.org/protobuf v1.35.2 // indirect
+	golang.org/x/sys v0.31.0 // indirect
+	google.golang.org/protobuf v1.36.5 // indirect
 )
