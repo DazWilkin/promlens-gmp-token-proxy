@@ -4,7 +4,7 @@ go 1.24
 
 require (
 	github.com/prometheus/client_golang v1.22.0
-	golang.org/x/oauth2 v0.29.0
+	golang.org/x/oauth2 v0.30.0
 )
 
 require (
