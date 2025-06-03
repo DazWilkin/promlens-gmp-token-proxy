@@ -85,7 +85,7 @@ Proxied requests may fail and return an error. Proxied requqests may succeed but
 ```bash
 cosign verify \
 --key=./cosign.pub \
-ghcr.io/dazwilkin/promlens-gmp-token-proxy:4a3cd9c31c907802d2db413bdd2d6fc10c2f8ce5
+ghcr.io/dazwilkin/promlens-gmp-token-proxy:e893eb14c7659544725436c6d2e91e095ad27693
 ```
 
 NOTE cosign.pub may be downloaded [here](./cosign.pub)
