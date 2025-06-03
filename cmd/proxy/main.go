@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"crypto/tls"
+	"errors"
 	"flag"
 	"fmt"
 	"io"
@@ -155,7 +156,7 @@ func (m *Mint) GetAccessToken() (string, error) {
 			tokensError.With(prometheus.Labels{}).Inc()
 			msg := "unable to mint new Token"
 			log.Print(msg)
-			return "", fmt.Errorf(msg)
+			return "", errors.New(msg)
 		}
 	}
 
@@ -230,7 +231,11 @@ func handler(m *Mint, remote, prefix string) http.HandlerFunc {
 			http.Error(w, msg, http.StatusInternalServerError)
 			return
 		}
-		defer pResp.Body.Close()
+		defer func() {
+			if err := pResp.Body.Close(); err != nil {
+				log.Printf("error closing response body: %v", err)
+			}
+		}()
 
 		proxiedStatus.With(prometheus.Labels{
 			"code": strconv.Itoa(pResp.StatusCode),
@@ -246,7 +251,9 @@ func handler(m *Mint, remote, prefix string) http.HandlerFunc {
 		}(w.Header(), pResp.Header)
 
 		w.WriteHeader(pResp.StatusCode)
-		io.Copy(w, pResp.Body)
+		if _, err := io.Copy(w, pResp.Body); err != nil {
+			log.Printf("error copying response body: %v", err)
+		}
 	}
 }
 func main() {
