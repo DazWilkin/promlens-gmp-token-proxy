@@ -1,33 +1,39 @@
 name: build-container
-
 on:
   push:
     branches:
       - master
-
+    paths-ignore:
+      - '**.md'
+      - '**.json'
+      - '**.jsonnet'
+      - '**.key'
+      - '**.pub'
+      - '**.sh'
 jobs:
   golangci:
     name: lint
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Setup
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: stable
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v8
         with:
-          version: v2.1.0
+          version: latest
   promlens-gmp-token-proxy:
     name: promlens-gmp-token-proxy
+    needs: golangci
     runs-on: ubuntu-latest
     env:
       REPO: dazwilkin/promlens-gmp-token-proxy
     steps:
       - name: checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: QEMU
         uses: docker/setup-qemu-action@v3
       - name: setup
@@ -70,7 +76,7 @@ jobs:
         env:
           COSIGN_PASSWORD: ""
       - name: revise occurrences of the image
-        run: |
+        run: |-
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Actions"
           for FILENAME in "./README.md"
